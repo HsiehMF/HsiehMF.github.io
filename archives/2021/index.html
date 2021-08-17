@@ -3,21 +3,15 @@
 
 <!-- Head tag (contains Google-Analytics、Baidu-Tongji)-->
 <head>
-  <!-- Google Analytics -->
-  
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-204944878-1"></script>
-    <script type="text/javascript">
-      window.dataLayer = window.dataLayer || [];
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-204944878-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-
-      gtag('config', 'UA-204944878-1');
-    </script>
-  
+    gtag('config', 'UA-204944878-1');
+  </script>
 
   <!-- Baidu Tongji -->
   
@@ -228,9 +222,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/archive/">
               
-              分類
+              總覽
               
               
             </a>
@@ -239,9 +233,9 @@
           
           
           <li>
-            <a href="/archive/">
+            <a href="/categories/">
               
-              總覽
+              分類
               
               
             </a>
