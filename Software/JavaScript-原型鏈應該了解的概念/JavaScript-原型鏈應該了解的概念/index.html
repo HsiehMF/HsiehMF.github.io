@@ -228,9 +228,9 @@
           
           
           <li>
-            <a href="/archive/">
+            <a href="/categories/">
               
-              總覽
+              分類
               
               
             </a>
@@ -239,9 +239,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/archive/">
               
-              分類
+              總覽
               
               
             </a>
@@ -355,9 +355,9 @@
           <div class="post-heading">
             <div class="tags">
               
-              <a class="tag" href="/tags/#Software" title="Software">Software</a>
-              
               <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+              
+              <a class="tag" href="/tags/#Software" title="Software">Software</a>
               
             </div>
             <h1>JavaScript 原型鏈應該了解的概念</h1>
@@ -438,16 +438,17 @@
       <!-- Post Container -->
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>若要介紹原型鏈，我們可以先從繼承說起，Java、C# 等物件導向語言擁有類別繼承的概念，也就是 Class，它就像一張藍圖，可以在內部定義之後透過 new 關鍵字建立物件。</p>
+        <h3 id="前言">前言</h3>
+<p>若要介紹原型鏈，我們可以先從繼承說起，Java、C# 等物件導向語言擁有類別繼承的概念，也就是 Class，它就像一張藍圖，可以在內部定義之後透過 new 關鍵字建立物件。</p>
 <p>而 JavaScript 在 ES6 後也有 Class ，但這並不是真的 Class，因為 JavaScript 的繼承是基於原型的方式來達成，物件直接從其他物件繼承，以 <strong>proto</strong> 來連接物件之間彼此的關係，稱之為原型鏈（prototype chain）。</p>
 <p>此篇文章只會說明原型鏈基本應該理解的東西，使用原型所需注意的細節真的很多，篇幅有限。</p>
-<h3 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h3><p>比起類別繼承，原型繼承的方式具有彈性、可擴充性，且懂得如何利用原型能讓 JavaScript 更有效率地執行，並避開一些雷點，理解比較厲害的大大寫的程式碼（有些 LeetCode 的實作題目也有用到原型的方式）。</p>
-<h3 id="實作及圖解原型鏈（prototype-chain）"><a href="#實作及圖解原型鏈（prototype-chain）" class="headerlink" title="實作及圖解原型鏈（prototype chain）"></a>實作及圖解原型鏈（prototype chain）</h3><p>首先，我們先來寫一段程式碼，假設有一個 User，名字為 noah，今年 20 歲：</p>
+<h3 id="優點">優點</h3>
+<p>比起類別繼承，原型繼承的方式具有彈性、可擴充性，且懂得如何利用原型能讓 JavaScript 更有效率地執行，並避開一些雷點，理解比較厲害的大大寫的程式碼（有些 LeetCode 的實作題目也有用到原型的方式）。</p>
+<h3 id="實作及圖解原型鏈（prototype-chain）">實作及圖解原型鏈（prototype chain）</h3>
+<p>首先，我們先來寫一段程式碼，假設有一個 User，名字為 noah，今年 20 歲：</p>
 <script src="https://gist.github.com/HsiehMF/bd5217575b76a76d997c8f69982de8c2.js"></script>
-
 <p>上面以函式建構式 new 出一個 noah 物件，並傳入了 name、age 參數，不過這並沒有什麼特別的，於是接著加入以下程式碼：</p>
 <script src="https://gist.github.com/HsiehMF/2691c942df9b56d51b6e34eb75c4da59.js"></script>
-
 <p>你會發現很神奇，noah 明明沒有 getInfo 方法卻可以呼叫！？因為這就是原型鏈的概念：</p>
 <ul>
 <li>當 JavaScript 發現該物件並沒有你所找尋的屬性或方法時，它就會往該物件的原型找，若原型沒有，再往原型的原型找，直到 null。</li>
@@ -458,57 +459,65 @@
 <p><img src="https://cdn-images-1.medium.com/max/1760/1*FetexB9Tj7jM3M7tb4s--g.png" alt="img"></p>
 <p>若要觀察物件之間的關係可以用 <strong>proto</strong> 或 Object.getPrototypeOf( ) 測試，以下結果證明 noah 確實連結到 User.prototype：</p>
 <script src="https://gist.github.com/HsiehMF/7586d21a7978dde4be83e0e79e65a80a.js"></script>
-
 <p>這樣你能了解平常在處理陣列時為什麼可以使用 .forEach()、.reverse()，而字串則能夠 .concat()、.splice() ！因為當 JavaScript 找不到屬性或方法就會往原型找，而這些方法都已經被寫好在原型了。</p>
-<h3 id="那將方法設置在-Prototype-跟直接在-User-設置有什麼不同！啊不是都可以用？"><a href="#那將方法設置在-Prototype-跟直接在-User-設置有什麼不同！啊不是都可以用？" class="headerlink" title="那將方法設置在 Prototype 跟直接在 User 設置有什麼不同！啊不是都可以用？"></a><strong>那將方法設置在 Prototype 跟直接在 User 設置有什麼不同！啊不是都可以用？</strong></h3><h4 id="一、在函式建構式設置"><a href="#一、在函式建構式設置" class="headerlink" title="一、在函式建構式設置"></a>一、在函式建構式設置</h4><p>每個被建立的實體物件都會有相同的方法，浪費了記憶體空間。</p>
+<h3 id="那將方法設置在-Prototype-跟直接在-User-設置有什麼不同！啊不是都可以用？"><strong>那將方法設置在 Prototype 跟直接在 User 設置有什麼不同！啊不是都可以用？</strong></h3>
+<h4 id="一、在函式建構式設置">一、在函式建構式設置</h4>
+<p>每個被建立的實體物件都會有相同的方法，浪費了記憶體空間。</p>
 <script src="https://gist.github.com/HsiehMF/f8d32873ab51020a5c04a6d9df4807b2.js"></script>
-
 <p><img src="https://cdn-images-1.medium.com/max/1760/1*v2lvi_lCb7Wnh2XnETjhng.png" alt="img"></p>
-<h4 id="二、在原型物件的-Prototype-上設置"><a href="#二、在原型物件的-Prototype-上設置" class="headerlink" title="二、在原型物件的 Prototype 上設置"></a>二、在原型物件的 Prototype 上設置</h4><p>每個被建立的實體物件都能共享該方法。</p>
+<h4 id="二、在原型物件的-Prototype-上設置">二、在原型物件的 Prototype 上設置</h4>
+<p>每個被建立的實體物件都能共享該方法。</p>
 <script src="https://gist.github.com/HsiehMF/94b59bf91d8f19813d1b6f490941f726.js"></script>
-
 <p><img src="https://cdn-images-1.medium.com/max/1760/1*wmhdwDtZ_wGZjOjSWhWHew.png" alt="img"></p>
 <p>因此，理論上應盡量把實體物件常使用到的屬性或方法放在原型物件的 Prototype 上，藉此節省記憶體空間。</p>
-<h3 id="Object-create"><a href="#Object-create" class="headerlink" title="Object.create"></a>Object.create</h3><p>剛剛都是以「函式建構式加上 new 關鍵字」來建立物件及連結原型物件，而 Object.create() 為第二種方法。</p>
-<h4 id="Object-create-proto-propertiesObject"><a href="#Object-create-proto-propertiesObject" class="headerlink" title="Object.create(proto [, propertiesObject])"></a>Object.create(proto [, propertiesObject])</h4><p>該方法為「替一個新物件指定它所參考的原型物件」。但這種說法我認為並不好理解，因為其 <strong>proto</strong> 的指向與函式建構式的不同：</p>
+<h3 id="Object-create">Object.create</h3>
+<p>剛剛都是以「函式建構式加上 new 關鍵字」來建立物件及連結原型物件，而 Object.create() 為第二種方法。</p>
+<h4 id="Object-create-proto-propertiesObject">Object.create(proto [, propertiesObject])</h4>
+<p>該方法為「替一個新物件指定它所參考的原型物件」。但這種說法我認為並不好理解，因為其 <strong>proto</strong> 的指向與函式建構式的不同：</p>
 <ul>
 <li>Object.create( ) 建立的物件，其 <strong>proto</strong> 是指向參考的物件</li>
 <li>函式建構式 new 建立的物件，其 <strong>proto</strong> 是指向函式的 prototype</li>
 </ul>
 <p>啊～先不要搞得那麼複雜，只要記住「<strong>Object.create( ) 所丟進去的物件參數等同於第一種方法的 .prototype 的屬性及方法</strong> 」就好，看程式碼會比較好理解：</p>
 <script src="https://gist.github.com/HsiehMF/ece9d32316ab4a4639f29443f069a6e6.js"></script>
-
 <p><img src="https://cdn-images-1.medium.com/max/1760/1*yig0JvpVWSZvGD9SrhbmDw.png" alt="img"></p>
 <blockquote>
 <p>[補充]：看完之後，你是否能理解 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Object/create">MDN</a> 上這個複雜例子了呢～？此篇還沒有探討到 Object.create( ) 的繼承，未來如果有機會的話會再探討。</p>
 </blockquote>
-<h4 id="Object-create-null"><a href="#Object-create-null" class="headerlink" title="Object.create(null)"></a>Object.create(null)</h4><p>另外，Object.create(null) 可以建立一個完全沒有參考原型的空物件，這麼做的主要原因通常是我們需要一個非常乾淨的物件環境，避免有時候命名相撞導致原型被污染。</p>
+<h4 id="Object-create-null">Object.create(null)</h4>
+<p>另外，Object.create(null) 可以建立一個完全沒有參考原型的空物件，這麼做的主要原因通常是我們需要一個非常乾淨的物件環境，避免有時候命名相撞導致原型被污染。</p>
 <script src="https://gist.github.com/HsiehMF/03057453e4da09c9b2df48c7878ae43d.js"></script>
-
 <p>在上述程式碼中，即使將函式建構式指定為空物件，還是無法創造一個乾淨的物件；但是 dict2 真的就是空物件，這表示你甚至不能在 dict2 使用 Object 最基本的 toString() 與 ValueOf()。</p>
 <p>所以，dict2 放的東西不用怕跟任何 Object 相撞，而且要客製化該物件的彈性程度比平常高出很多。</p>
-<h3 id="其它使用原型鏈事項"><a href="#其它使用原型鏈事項" class="headerlink" title="其它使用原型鏈事項"></a>其它使用原型鏈事項</h3><h4 id="一、Prototype-應該儲存什麼"><a href="#一、Prototype-應該儲存什麼" class="headerlink" title="一、Prototype 應該儲存什麼"></a>一、Prototype 應該儲存什麼</h4><p>前面有提到將東西放在原型物件上能有效減少記憶體空間，並具有差不多快的效能（Maybe），但不是所有東西都要往原型物件塞。</p>
+<h3 id="其它使用原型鏈事項">其它使用原型鏈事項</h3>
+<h4 id="一、Prototype-應該儲存什麼">一、Prototype 應該儲存什麼</h4>
+<p>前面有提到將東西放在原型物件上能有效減少記憶體空間，並具有差不多快的效能（Maybe），但不是所有東西都要往原型物件塞。</p>
 <p>在 Effective JavaScript 書中提及通常放到原型物件大多都是「方法」，若「屬性」要放到原型物件，可以先確認以下事項，否則，建議儲存到實體物件上。</p>
 <blockquote>
 <p>屬性是真的需要被共用的資料；或者這個屬性的值基本上不會變動（類似 const）。</p>
 </blockquote>
-<h4 id="二、陣列避免使用-for-in-遍歷"><a href="#二、陣列避免使用-for-in-遍歷" class="headerlink" title="二、陣列避免使用 for-in 遍歷"></a>二、陣列避免使用 for-in 遍歷</h4><p>for in 是以 key-value 結構的方式進行遍歷，但是這會遍歷到陣列其原型物件 prototype 的東西。</p>
+<h4 id="二、陣列避免使用-for-in-遍歷">二、陣列避免使用 for-in 遍歷</h4>
+<p>for in 是以 key-value 結構的方式進行遍歷，但是這會遍歷到陣列其原型物件 prototype 的東西。</p>
 <script src="https://gist.github.com/HsiehMF/74e5e0e823d49c2787df71afcfa79e0c.js"></script>
-
-<h4 id="三、不要隨意修改-proto"><a href="#三、不要隨意修改-proto" class="headerlink" title="三、不要隨意修改 proto"></a>三、不要隨意修改 <strong>proto</strong></h4><ol>
+<h4 id="三、不要隨意修改-proto">三、不要隨意修改 <strong>proto</strong></h4>
+<ol>
 <li>這與效能有關，JavaScript 引擎有針對一些物件特性的操作做效能上的優化，隨意更動結構可能會破壞設定。</li>
 <li>隨意改變物件的原型可能導致你無法預測接下來會出現什麼錯誤。</li>
 <li>若要自訂物件之間的連結建議使用 Object.create()，避免用 <strong>proto</strong>。</li>
 </ol>
-<h3 id="補充：那麼-ES6-Class-是什麼？"><a href="#補充：那麼-ES6-Class-是什麼？" class="headerlink" title="補充：那麼 ES6 Class 是什麼？"></a>補充：那麼 ES6 Class 是什麼？</h3><ul>
+<h3 id="補充：那麼-ES6-Class-是什麼？">補充：那麼 ES6 Class 是什麼？</h3>
+<ul>
 <li>其他物件導向語言的 Class 並不是物件，是一種藍圖，直到真的 new 之前不會得到有物件產生。</li>
 <li>ES6 的 Class 就是一個物件，然後你以該物件作為新物件連接的原型。</li>
 <li>為一種語法糖衣（syntactic sugar），因為從上述說明可得知原理都不變，皆屬於原型繼承的概念。</li>
 <li>以 class 宣告的物件沒有 new 關鍵字直接回報錯誤，避免忘記 new 而造成隱藏的 bug。</li>
 </ul>
-<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>這次對基本的原型鏈介紹也讓我更明白裡面的運作，其實有時看一看以為自己懂了，但有時一個瞬間又被搞混了，建議可以畫出原型鏈的概念圖，會讓自己對於細節清晰許多。</p>
+<h3 id="總結">總結</h3>
+<p>這次對基本的原型鏈介紹也讓我更明白裡面的運作，其實有時看一看以為自己懂了，但有時一個瞬間又被搞混了，建議可以畫出原型鏈的概念圖，會讓自己對於細節清晰許多。</p>
 <p>而本篇所運用的例子其實還沒介紹到對於 Prototype 與 Prototype 之間的繼承，以及一些操作原型鏈的 method、polyfill 概念…等，有時間的話會再補上一篇。</p>
-<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p>[1] Herman, D. (2013). Effective JavaScript: 68 Specific Ways to Harness the Power of JavaScript.<br>[2] JavaScript: Understanding the Weird Parts.</p>
+<h3 id="參考資料">參考資料</h3>
+<p>[1] Herman, D. (2013). Effective JavaScript: 68 Specific Ways to Harness the Power of JavaScript.<br>
+[2] JavaScript: Understanding the Weird Parts.</p>
 
 
         <hr>
@@ -635,9 +644,9 @@
           </h5>
           <div class="tags">
             
-            <a class="tag" href="/tags/#Software" title="Software">Software</a>
-            
             <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+            
+            <a class="tag" href="/tags/#Software" title="Software">Software</a>
             
           </div>
         </section>

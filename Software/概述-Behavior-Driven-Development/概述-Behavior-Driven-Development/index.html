@@ -228,9 +228,9 @@
           
           
           <li>
-            <a href="/archive/">
+            <a href="/categories/">
               
-              總覽
+              分類
               
               
             </a>
@@ -239,9 +239,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/archive/">
               
-              分類
+              總覽
               
               
             </a>
@@ -376,7 +376,7 @@
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">707</span> In Total
+              Words <span class="post-count">709</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -438,29 +438,39 @@
       <!-- Post Container -->
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-        <h3 id="何謂-BDD"><a href="#何謂-BDD" class="headerlink" title="何謂 BDD"></a>何謂 BDD</h3><p>BDD 是一種軟體工程的方法，它重視人員之間的溝通，商業分析師、開發者、測試者及客戶會一起討論並確定出整體需求。強調與使用者和利益相關者持續進行對話，逐步建立大家對於目標及功能的共識，避免去做沒有提供功能的功能。</p>
+        <h3 id="何謂-BDD">何謂 BDD</h3>
+<p>BDD 是一種軟體工程的方法，它重視人員之間的溝通，商業分析師、開發者、測試者及客戶會一起討論並確定出整體需求。強調與使用者和利益相關者持續進行對話，逐步建立大家對於目標及功能的共識，避免去做沒有提供功能的功能。</p>
 <p>BDD 主要利用了一種類似於英文的通用語言(通常稱為 <a target="_blank" rel="noopener" href="https://cucumber.io/docs/gherkin/reference/">Gherkin</a>)，並將它用在功能 (Feature) 及範例 (Example) 的說明上，幫助整體的專案成員以及客戶都能理解我們具體到底要做什麼。具體流程如下圖所示：</p>
 <p><img src="https://cdn-images-1.medium.com/max/2600/1*ldSihIfq4U2a9aHLfYdvZg.png" alt="img"></p>
 <p>BDD 開發流程是從 Business Goal 出發，進而定義出為了達到目標所需要開發的功能(Feature)項目，然後利用使用情境 (User story) 描述出整體功能，再者以 Gherkin 語法建構功能的具體運作 (Example)。最後，開發人員根據 Example 轉寫出整合測試與單元測試 (Executable Specification, Low-level specifications) 來驗證將要開發的項目。</p>
-<h3 id="BDD-如何運作"><a href="#BDD-如何運作" class="headerlink" title="BDD 如何運作"></a>BDD 如何運作</h3><p>BDD 本身是一種幫助開發團隊進行定義開發的功能項目並且減少最終產品失敗的風險，主要是由 <strong>Scenario、Given、And、When、Then…</strong> 的 Gherkin 語法，用來充分地定義 Feature。</p>
+<h3 id="BDD-如何運作">BDD 如何運作</h3>
+<p>BDD 本身是一種幫助開發團隊進行定義開發的功能項目並且減少最終產品失敗的風險，主要是由 <strong>Scenario、Given、And、When、Then…</strong> 的 Gherkin 語法，用來充分地定義 Feature。</p>
 <p>如以下 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/WebSocket">WebScoket</a> 傳輸訊息的例子，能夠一目了然地知道要實做的功能與功能細部上具體的行為：</p>
-<h4 id="Scenario-Transferring-a-message-to-another-client-by-WebSocket"><a href="#Scenario-Transferring-a-message-to-another-client-by-WebSocket" class="headerlink" title="Scenario: Transferring a message to another client by WebSocket"></a>Scenario: Transferring a message to another client by WebSocket</h4><p><strong>Given</strong> a destination IP address and a mailbox<br> <strong>And</strong> mailbox have message should send to destination IP<br> <strong>When</strong> I send a message, there is no message in mailbox<br> <strong>Then</strong> the client should got message<br> <strong>And</strong> I have no message in mailbox</p>
+<h4 id="Scenario-Transferring-a-message-to-another-client-by-WebSocket">Scenario: Transferring a message to another client by WebSocket</h4>
+<p><strong>Given</strong> a destination IP address and a mailbox<br>
+<strong>And</strong> mailbox have message should send to destination IP<br>
+<strong>When</strong> I send a message, there is no message in mailbox<br>
+<strong>Then</strong> the client should got message<br>
+<strong>And</strong> I have no message in mailbox</p>
 <blockquote>
-<p>功能：實做 WebSocket client 傳輸，會給予目標 IP、Message box，當 message box 有訊息時就進行傳輸，當傳輸的時候 message box 沒有訊息且接收方收到該訊息<em>。</em></p>
+<p>功能：實做 WebSocket client 傳輸，會給予目標 IP、Message box，當 message box 有訊息時就進行傳輸，當傳輸的時候 message box 沒有訊息且接收方收到該訊息*。*</p>
 </blockquote>
 <p>而 BDD 實際運用的時候是由 Marketing、PM、RD 團隊一起參與談論需求，直到寫出上面的範例碼，以此防止因為團隊之間的不理解導致最終開發出來的功能與 Business Goal有所誤差。BDD 有一個好處，當寫出 Example 之後，就可以使用一些現有的工具將這些 Examples 轉化成 Executable Specification、Low-level specifications，相對於實務上即為「整合測試」與「單元測試」。</p>
-<h4 id="採用-BDD-對整個團隊的好處"><a href="#採用-BDD-對整個團隊的好處" class="headerlink" title="採用 BDD 對整個團隊的好處"></a><strong>採用 BDD 對整個團隊的好處</strong></h4><ul>
+<h4 id="採用-BDD-對整個團隊的好處"><strong>採用 BDD 對整個團隊的好處</strong></h4>
+<ul>
 <li>開發人員：了解現有功能的運作情況。</li>
 <li>測試人員和業務分析師：可以看到他們指定的功能是如何實現的。</li>
 <li>客戶和專案經理：可以判斷專案的當前狀態，查看進度並決定將哪些功能發佈。</li>
 </ul>
-<h3 id="參考工具"><a href="#參考工具" class="headerlink" title="參考工具"></a>參考工具</h3><ul>
+<h3 id="參考工具">參考工具</h3>
+<ul>
 <li>Python：<a target="_blank" rel="noopener" href="https://github.com/behave/behave">Behave</a></li>
 <li>Java：<a target="_blank" rel="noopener" href="https://github.com/cucumber/cucumber-jvm">Cucumber-JVM</a></li>
 <li>.NET：<a target="_blank" rel="noopener" href="https://specflow.org/">SpecFlow</a></li>
 <li>JavaScript：<a target="_blank" rel="noopener" href="https://github.com/cucumber/cucumber-js">Cucumber-JS</a></li>
 </ul>
-<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><p>[1] Smart, J. F. (2014). BDD in Action (Vol. 12). New York: Manning Publications.</p>
+<h3 id="參考資料">參考資料</h3>
+<p>[1] Smart, J. F. (2014). BDD in Action (Vol. 12). New York: Manning Publications.</p>
 
 
         <hr>

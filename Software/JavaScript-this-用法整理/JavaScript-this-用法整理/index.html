@@ -228,9 +228,9 @@
           
           
           <li>
-            <a href="/archive/">
+            <a href="/categories/">
               
-              總覽
+              分類
               
               
             </a>
@@ -239,9 +239,9 @@
           
           
           <li>
-            <a href="/categories/">
+            <a href="/archive/">
               
-              分類
+              總覽
               
               
             </a>
@@ -355,9 +355,9 @@
           <div class="post-heading">
             <div class="tags">
               
-              <a class="tag" href="/tags/#Software" title="Software">Software</a>
-              
               <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+              
+              <a class="tag" href="/tags/#Software" title="Software">Software</a>
               
             </div>
             <h1>JavaScript this 用法整理</h1>
@@ -439,46 +439,49 @@
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
         <p>本文章主要說明 Javascript this 的用法，提供了程式碼範例及說明，不僅是入門或者進階的開發者都值得一讀。</p>
-<p>this 在 JavaSrcipt 中預設值是指向全域，也因為這一項設定造成寫作上的困擾。本文章參考了「<em>你所不知道的 JS</em>」<em>，</em>詳細講述 this 基本使用與衍生的內部原理。</p>
-<h3 id="一、直接呼叫的函式，this-會指向全域"><a href="#一、直接呼叫的函式，this-會指向全域" class="headerlink" title="一、直接呼叫的函式，this 會指向全域"></a><strong>一、直接呼叫的函式，this 會指向全域</strong></h3><p>也就是說，在一個函式（物件）裡面直接讀取 this 關鍵字的變數時，則會到最外層的區域（全域）尋找同名的變數，若沒有，則會在全域中直接新增變數。</p>
+<p>this 在 JavaSrcipt 中預設值是指向全域，也因為這一項設定造成寫作上的困擾。本文章參考了「<em>你所不知道的 JS</em>」*，*詳細講述 this 基本使用與衍生的內部原理。</p>
+<h3 id="一、直接呼叫的函式，this-會指向全域"><strong>一、直接呼叫的函式，this 會指向全域</strong></h3>
+<p>也就是說，在一個函式（物件）裡面直接讀取 this 關鍵字的變數時，則會到最外層的區域（全域）尋找同名的變數，若沒有，則會在全域中直接新增變數。</p>
 <script src="https://gist.github.com/HsiehMF/2a4d391fd484b5d14ab539d74f4ef90c.js"></script>
-
 <blockquote>
-<p><em>以上範例在「全域」中及「函式」分別宣告了變數</em> <code>*name*</code><em>，有些人會認為既然 this.name 在 who 函式內，那麼 name應該會顯示「大家好，這是函式 name」。但實際上並非如此，直接呼叫的函式其 this 會指向全域。</em></p>
+<p><em>以上範例在「全域」中及「函式」分別宣告了變數</em> <code>*name*</code><em>，有些人會認為既然 <a target="_blank" rel="noopener" href="http://this.name">this.name</a> 在 who 函式內，那麼 name應該會顯示「大家好，這是函式 name」。但實際上並非如此，直接呼叫的函式其 this 會指向全域。</em></p>
 </blockquote>
-<h3 id="二、哪個物件去呼叫了函式，函式內的-this-就會指向該物件"><a href="#二、哪個物件去呼叫了函式，函式內的-this-就會指向該物件" class="headerlink" title="二、哪個物件去呼叫了函式，函式內的 this 就會指向該物件"></a><strong>二、哪個物件去呼叫了函式，函式內的 this 就會指向該物件</strong></h3><p>換句話說，當一個函式被包含在某一個物件中，則該函式裡面的 this 是指向該物件。</p>
-<p>如下程式碼，obj1 物件中的 name 叫做「微風」，obj2 物件中的 name為「狐狸」，而 who 函式的作用會顯示出名稱 console.log(this.name)。</p>
+<h3 id="二、哪個物件去呼叫了函式，函式內的-this-就會指向該物件"><strong>二、哪個物件去呼叫了函式，函式內的 this 就會指向該物件</strong></h3>
+<p>換句話說，當一個函式被包含在某一個物件中，則該函式裡面的 this 是指向該物件。</p>
+<p>如下程式碼，obj1 物件中的 name 叫做「微風」，obj2 物件中的 name為「狐狸」，而 who 函式的作用會顯示出名稱 console.log(<a target="_blank" rel="noopener" href="http://this.name">this.name</a>)。</p>
 <script src="https://gist.github.com/HsiehMF/a12e004b51c31570801a9f13de7307d8.js"></script>
-
 <blockquote>
 <p><em>因為是 obj1 呼叫了 who()，所以函式內的 this 就會指向 obj1，顯示出「微風」；同理，obj2 呼叫函式時則會顯示「狐狸」。</em></p>
 </blockquote>
 <p>但是，有時候「<strong>哪個物件去呼叫了函式，函式內的 this 就會指向該物件</strong>」會失效，反而變成 「this 指向了全域」，造成非預期的錯誤，主要有以下兩種失效的情況：</p>
-<h4 id="間接呼叫"><a href="#間接呼叫" class="headerlink" title="間接呼叫"></a>間接呼叫</h4><p>把物件中的方法參考到另一個新變數(call reference)，當呼叫這個新變數時就會退回到「this 指向全域」的模式。以程式碼為例：</p>
+<h4 id="間接呼叫">間接呼叫</h4>
+<p>把物件中的方法參考到另一個新變數(call reference)，當呼叫這個新變數時就會退回到「this 指向全域」的模式。以程式碼為例：</p>
 <script src="https://gist.github.com/HsiehMF/e2242bcf17c73035f0144ed8d96f0e0b.js"></script>
-
 <blockquote>
 <p><em>其實可以用前面介紹的思維來解釋，</em><code>*loseImplicitlyBound()*</code> <em>是一個直接被呼叫的函式，因此 this 很自然地會指向全域，顯示在全域宣告的</em> <code>*name*</code> <em>值「大家好，這是全域 name」，而非 obj1 的「微風」。</em></p>
 </blockquote>
-<h4 id="callback"><a href="#callback" class="headerlink" title="callback"></a>callback</h4><p>比較恐怖的是，使用 callback 時也有可能會發生「this 指向全域」的情況。如以下程式碼：</p>
+<h4 id="callback">callback</h4>
+<p>比較恐怖的是，使用 callback 時也有可能會發生「this 指向全域」的情況。如以下程式碼：</p>
 <script src="https://gist.github.com/HsiehMF/3231fbfd487622fced82fe936ee75f9e.js"></script>
-
 <blockquote>
 <p><em>我們在</em> <code>*callbackTest()*</code> <em>中傳入了</em> <code>*obj1.who*</code><em>，而</em> <code>*callbackTest()*</code> <em>會在裡面呼叫</em> <code>*obj1.who*</code><em>，理論上結果應該會顯示「微風」，卻變成了「大家好，這是全域 name」。</em></p>
+</blockquote>
+<blockquote>
 <p>因此，為了解決上述發生的問題，才會出現了第三種 this 用法，直接以 call, apply, bind 綁定 this 指向誰。</p>
 </blockquote>
-<h3 id="三、call-apply-將第一個參數作為-this-綁定的目標"><a href="#三、call-apply-將第一個參數作為-this-綁定的目標" class="headerlink" title="三、call, apply 將第一個參數作為 this 綁定的目標"></a><strong>三、call, apply 將第一個參數作為 this 綁定的目標</strong></h3><h4 id="兩者差別-call-v-s-apply"><a href="#兩者差別-call-v-s-apply" class="headerlink" title="兩者差別 call v.s. apply"></a>兩者差別 call v.s. apply</h4><p>主要差別只是在於 <code>call()</code> 後面接收一連串的參數，而 <code>apply()</code> 則接收一個陣列作為參數。如下：</p>
+<h3 id="三、call-apply-將第一個參數作為-this-綁定的目標"><strong>三、call, apply 將第一個參數作為 this 綁定的目標</strong></h3>
+<h4 id="兩者差別-call-v-s-apply">兩者差別 call v.s. apply</h4>
+<p>主要差別只是在於 <code>call()</code> 後面接收一連串的參數，而 <code>apply()</code> 則接收一個陣列作為參數。如下：</p>
 <script src="https://gist.github.com/HsiehMF/66185c67c9a11b1693466610a4965356.js"></script>
-
 <blockquote>
 <p><em>showTrainInfo 函式會印出 this 及 arg 的資訊，我們使用 call, apply 把 this 綁定到 train 物件，所以結果顯示了 train 物件的值「高雄 到 台南 」，而第 11 行 call() 傳入了個別參數，第 13 行 apply() 傳入了陣列，兩者同樣印出了「 30 分鐘 區間車」</em>。</p>
 </blockquote>
-<h4 id="強制綁定"><a href="#強制綁定" class="headerlink" title="強制綁定"></a>強制綁定</h4><p>但是，call(), apply() 會有被覆蓋的風險，導致 this 仍然有可能指向全域，例如使用第三方函式庫之類的，比較保險作法是使用「強制綁定」：</p>
+<h4 id="強制綁定">強制綁定</h4>
+<p>但是，call(), apply() 會有被覆蓋的風險，導致 this 仍然有可能指向全域，例如使用第三方函式庫之類的，比較保險作法是使用「強制綁定」：</p>
 <ul>
 <li>透過兩種方式達成： bind() 或函式表示式(Function Expression)</li>
 </ul>
 <script src="https://gist.github.com/HsiehMF/3bff78b657462c41fc9d3bf42529e1e7.js"></script>
-
 <blockquote>
 <p><em>與 call, apply 不同，bind 會直接回傳一個綁定好的函式，可以用變數去接收及使用(第 16 行)</em>。<em>另外，使用函式表示式也能達到 bind 的效果(第 20 行)。</em></p>
 </blockquote>
@@ -486,38 +489,38 @@
 <li>由硬繫結所綁定的 this 只能綁定一次，不能重新綁定</li>
 </ul>
 <script src="https://gist.github.com/HsiehMF/64da9e9810de5d23cfb5980db5b65d28.js"></script>
-
 <blockquote>
 <p><em>經過前一步驟的綁定，發現後來這個函式無論使用 call, apply, bind 都無法重新綁定。因此，使用第三方函式庫時，比較不用怕綁定的機制莫名其妙被蓋掉。</em></p>
 </blockquote>
-<h3 id="四、this-綁定在以-new-關鍵字所建立的實體物件"><a href="#四、this-綁定在以-new-關鍵字所建立的實體物件" class="headerlink" title="四、this 綁定在以 new 關鍵字所建立的實體物件"></a><strong>四、this 綁定在以 new 關鍵字所建立的實體物件</strong></h3><script src="https://gist.github.com/HsiehMF/6f88a35e1711f7279ac78ce51ee1351d.js"></script>
-
+<h3 id="四、this-綁定在以-new-關鍵字所建立的實體物件"><strong>四、this 綁定在以 new 關鍵字所建立的實體物件</strong></h3>
+<script src="https://gist.github.com/HsiehMF/6f88a35e1711f7279ac78ce51ee1351d.js"></script>
 <blockquote>
-<p><em>在函式前面加上 new 關鍵字，this 會綁定在函式所建立出來的實體物件 result 上，所以存取 result.name 會有當初在 new 所傳入的值「大家好，我是 new」。</em></p>
+<p><em>在函式前面加上 new 關鍵字，this 會綁定在函式所建立出來的實體物件 result 上，所以存取 <a target="_blank" rel="noopener" href="http://result.name">result.name</a> 會有當初在 new 所傳入的值「大家好，我是 new」。</em></p>
 </blockquote>
-<h3 id="五、箭頭函式內的-this-會找到離自己最近的範疇-區域或全域-作為綁定對象"><a href="#五、箭頭函式內的-this-會找到離自己最近的範疇-區域或全域-作為綁定對象" class="headerlink" title="五、箭頭函式內的 this 會找到離自己最近的範疇 (區域或全域) 作為綁定對象"></a>五、<strong>箭頭函式內的 this 會找到離自己最近的範疇 (區域或全域) 作為綁定對象</strong></h3><p>在說明箭頭函式前，我們先來了解一段歷史：</p>
+<h3 id="五、箭頭函式內的-this-會找到離自己最近的範疇-區域或全域-作為綁定對象">五、<strong>箭頭函式內的 this 會找到離自己最近的範疇 (區域或全域) 作為綁定對象</strong></h3>
+<p>在說明箭頭函式前，我們先來了解一段歷史：</p>
 <p>先前提到「直接呼叫函式」會讓 this 指向全域，造成某些使用情況下的困擾，在箭頭函式還沒推出時，除了使用 call, apply, bind，有些人會以「var self = this」的方式，先把外層的 this 儲存起來，然後放到函式使用。</p>
 <p>你可能會疑惑幹嘛提到 <code>var self = this</code> ？這是因為<code>var self = this</code>的原理類似於箭頭函式。以下直接看程式碼來說明運作，第一個範例是沒有使用 <code>var self = this</code> 的情況：</p>
 <script src="https://gist.github.com/HsiehMF/f9eb2731b59ab155f68978feb9e92964.js"></script>
-
 <p>範例一：沒有使用 var self = this 的情況</p>
 <blockquote>
 <p><em>我們在 obj 中的 update 函式裡面又宣告了 setName 函式，setName 函式預計作用是去設置一個新名稱給 obj 的 name 變數。</em></p>
+</blockquote>
+<blockquote>
 <p><em>第 13 行呼叫 obj.update()。首先，因為是以物件去呼叫函式，因此第 4 行顯示了「初三睡到飽」，而我們在第 8 行傳入了「初四了，阿伯」，但是結果並非預期，obj 的 name 變數沒有被更改。</em></p>
 </blockquote>
 <p>在前面我們已經說明了原因，因為這是一個直接呼叫的函式，因此「this 會指向全域」，圖 1 證明 <code>window</code> 物件裡面多了一個 <code>name</code> 變數。</p>
 <p><img src="https://cdn-images-1.medium.com/max/1760/1*pNySJE3i3RM9vfQliZPWmQ.png" alt="img">圖1 預設繫結與全域物件</p>
 <p>此時 <code>var self = this</code> 就派上用場：</p>
 <script src="https://gist.github.com/HsiehMF/c697af211c4d5e9455f1984b1bb71d3d.js"></script>
-
 <p>範例二：var self = this 的情況</p>
 <blockquote>
-<p><em>我們在第 4 行用</em> <code>*self*</code> <em>儲存 this 的參考，並在第 7 行中將 this.name 更改成 self.name，所以即使第 9 行直接呼叫函式的情況下，還是能透過</em> <code>*self*</code> <em>來存取到原本的 this。</em></p>
+<p><em>我們在第 4 行用</em> <code>*self*</code> <em>儲存 this 的參考，並在第 7 行中將 <a target="_blank" rel="noopener" href="http://this.name">this.name</a> 更改成 <a target="_blank" rel="noopener" href="http://self.name">self.name</a>，所以即使第 9 行直接呼叫函式的情況下，還是能透過</em> <code>*self*</code> <em>來存取到原本的 this。</em></p>
 </blockquote>
 <p>哦！那箭頭函式要怎麼達成以上的效果？那又更簡單了，直接用就對了：</p>
 <script src="https://gist.github.com/HsiehMF/ffd92f55bbc65b5cd109f7d9f2cdc936.js"></script>
-
-<h3 id="優先順序"><a href="#優先順序" class="headerlink" title="優先順序"></a>優先順序</h3><p>關於 this 的五種用法具有優先順序，依照順序大小分別為：</p>
+<h3 id="優先順序">優先順序</h3>
+<p>關於 this 的五種用法具有優先順序，依照順序大小分別為：</p>
 <ol>
 <li>ES6 箭頭函式</li>
 <li>new 關鍵字</li>
@@ -529,18 +532,25 @@
 <blockquote>
 <p>關於測試的程式碼就不作詳述，此處表達的重點是必須了解到 this 的用法具有優先順序即可。</p>
 </blockquote>
-<h3 id="其他重要事項"><a href="#其他重要事項" class="headerlink" title="其他重要事項"></a>其他重要事項</h3><h4 id="嚴謹模式-strict"><a href="#嚴謹模式-strict" class="headerlink" title="嚴謹模式 (strict)"></a><strong>嚴謹模式 (strict)</strong></h4><p>第一種用法（直接呼叫函式）在非嚴謹模式下會回傳 <code>undefined</code>；而在嚴謹模式(strict)下則會回報錯誤。<br>因此，設置嚴謹模式有一個好處：避免不小心將 this 指向全域時阻止我們改動到全域的東西，以利於除錯或發生奇怪、非預期的現象發生。</p>
-<h4 id="使用-call-apply-bind-時不要將-this-綁定給-null，會導致「this-指向全域」"><a href="#使用-call-apply-bind-時不要將-this-綁定給-null，會導致「this-指向全域」" class="headerlink" title="使用 call, apply, bind 時不要將 this 綁定給 null，會導致「this 指向全域」"></a><strong>使用 call, apply, bind 時不要將 this 綁定給 null，會導致「this 指向全域」</strong></h4><p>讓我們來釐清什麼時候會把 this 綁給 <code>null</code>？通常是當你不在意 this 綁定給誰，只想把值給攤開 (apply) 或是用 currying 將底層的值設定好時，就有可能這麼做。<br>解決辦法可以運用原型鏈<a target="_blank" rel="noopener" href="https://medium.com/微峯飛翔/javascript-原型鏈中應該了解的概念-3f7574b4ead2">[3]</a>中的 <code>Object.create(null)</code> 來創造一個乾淨的物件用來替代 <code>null</code>。</p>
-<h3 id="牛刀小試"><a href="#牛刀小試" class="headerlink" title="牛刀小試"></a>牛刀小試</h3><p>猜猜看以下執行結果為何？</p>
+<h3 id="其他重要事項">其他重要事項</h3>
+<h4 id="嚴謹模式-strict"><strong>嚴謹模式 (strict)</strong></h4>
+<p>第一種用法（直接呼叫函式）在非嚴謹模式下會回傳 <code>undefined</code>；而在嚴謹模式(strict)下則會回報錯誤。<br>
+因此，設置嚴謹模式有一個好處：避免不小心將 this 指向全域時阻止我們改動到全域的東西，以利於除錯或發生奇怪、非預期的現象發生。</p>
+<h4 id="使用-call-apply-bind-時不要將-this-綁定給-null，會導致「this-指向全域」"><strong>使用 call, apply, bind 時不要將 this 綁定給 null，會導致「this 指向全域」</strong></h4>
+<p>讓我們來釐清什麼時候會把 this 綁給 <code>null</code>？通常是當你不在意 this 綁定給誰，只想把值給攤開 (apply) 或是用 currying 將底層的值設定好時，就有可能這麼做。<br>
+解決辦法可以運用原型鏈[<a target="_blank" rel="noopener" href="https://medium.com/%E5%BE%AE%E5%B3%AF%E9%A3%9B%E7%BF%94/javascript-%E5%8E%9F%E5%9E%8B%E9%8F%88%E4%B8%AD%E6%87%89%E8%A9%B2%E4%BA%86%E8%A7%A3%E7%9A%84%E6%A6%82%E5%BF%B5-3f7574b4ead2">3]</a>中的 <code>Object.create(null)</code> 來創造一個乾淨的物件用來替代 <code>null</code>。</p>
+<h3 id="牛刀小試">牛刀小試</h3>
+<p>猜猜看以下執行結果為何？</p>
 <script src="https://gist.github.com/HsiehMF/7fe181d5abde87777621f1e6f561d5d1.js"></script>
-
-<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>本文介紹了五種 this 的用法以及各個 this 用法的權重順序，也提到幾個可能導致 this 指向全域的恐怖情況，希望讀者在閱讀後能覺得對 JavaScript 中的 this 能有更進一步的理解，避免掉一些奇怪的 Bug。</p>
+<h3 id="結語">結語</h3>
+<p>本文介紹了五種 this 的用法以及各個 this 用法的權重順序，也提到幾個可能導致 this 指向全域的恐怖情況，希望讀者在閱讀後能覺得對 JavaScript 中的 this 能有更進一步的理解，避免掉一些奇怪的 Bug。</p>
 <p>另外，也蠻推大家看這本書，覺得後面關於 OOP、原型鏈 OOP、OLOO 的章節寫得蠻精彩的。</p>
-<h4 id="小插曲-—-callback"><a href="#小插曲-—-callback" class="headerlink" title="小插曲 — callback"></a>小插曲 — callback</h4><p>筆者最近在學習 Vue 時也遇到了同樣問題，簡單說明一下程式碼，本來我想用 Axios 去撈取伺服器上 json 資料，並把資料同步到 Vue 的組件上，讓進入頁面的使用者能看到對應的頁面標題及資料等。</p>
+<h4 id="小插曲-—-callback">小插曲 — callback</h4>
+<p>筆者最近在學習 Vue 時也遇到了同樣問題，簡單說明一下程式碼，本來我想用 Axios 去撈取伺服器上 json 資料，並把資料同步到 Vue 的組件上，讓進入頁面的使用者能看到對應的頁面標題及資料等。</p>
 <p>在 <code>.then()</code> 的地方我傳入了一個 callback 來存取資料，但此時 this 已被指向全域，因此無法正常修改到 Vue 中的 <code>title</code>, <code>description</code> 變數，反而在全域中另外建立了 <code>title</code>, <code>description</code> 變數。還好那時正好剛讀完了 this 用法，索性就用箭頭函式解決了。</p>
 <script src="https://gist.github.com/HsiehMF/f9cccc71f180d12df28975a2f06f1013.js"></script>
-
-<h4 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h4><ol>
+<h4 id="參考資料">參考資料</h4>
+<ol>
 <li>你所不知道的 JS：範疇與 Closures/this 與原型物件</li>
 <li>MDN Web Docs — Function.prototype.call</li>
 <li>JavaScript 原型鏈中應該了解的概念</li>
@@ -667,9 +677,9 @@
           </h5>
           <div class="tags">
             
-            <a class="tag" href="/tags/#Software" title="Software">Software</a>
-            
             <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+            
+            <a class="tag" href="/tags/#Software" title="Software">Software</a>
             
           </div>
         </section>
