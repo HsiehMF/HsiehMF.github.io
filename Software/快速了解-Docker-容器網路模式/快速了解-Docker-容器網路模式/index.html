@@ -103,10 +103,10 @@
   <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
   <!-- ga & ba script hoook -->
-  <link rel="canonical" href="http://yoursite-url/tags/">
+  <link rel="canonical" href="http://yoursite-url/Software/快速了解-Docker-容器網路模式/快速了解-Docker-容器網路模式/">
   <title>
     
-      Tags - Alvin H • 軟體技術分享
+      快速了解 Docker 容器網路模式 - Alvin H • 軟體技術分享
     
   </title>
 <meta name="generator" content="Hexo 5.4.0"></head>
@@ -264,25 +264,7 @@
           <!-- LangSelect -->
           
           
-          <!-- LangSelect start -->
-          <!-- LangSelect -->
-<li>
-  <a id="lang-select-label"><i class="fa fa-globe"></i>
-    <span>
-      繁體中文
-    </span>
-    <select id="lang-select" data-canonical="tags/index.html">
-      
-      
-      <option value="tw"  selected >
-        繁體中文
-      </option>
-      
-    </select>
-  </a>
-</li>
-
-          <!-- LangSelect end -->
+          
           
           
         </ul>
@@ -334,19 +316,19 @@
     .body--light {
       /* intro-header */
       --intro-header-background-image-url-home: url('/img/header_img/coding.jpg');
-      --intro-header-background-image-url-post: url('img/header_img/tag_bg.jpg');
-      --intro-header-background-image-url-page: url('/img/header_img/tag_bg.jpg');
+      --intro-header-background-image-url-post: url('/img/post_header_img/docker_1.jpg');
+      --intro-header-background-image-url-page: url('//img/post_header_img/docker_1.jpg');
     }
     .body--dark {
       --intro-header-background-image-url-home: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('/img/header_img/coding.jpg');
-      --intro-header-background-image-url-post: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('img/header_img/tag_bg.jpg');
-      --intro-header-background-image-url-page: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('/img/header_img/tag_bg.jpg');
+      --intro-header-background-image-url-post: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('/img/post_header_img/docker_1.jpg');
+      --intro-header-background-image-url-page: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url('//img/post_header_img/docker_1.jpg');
     }
 
     header.intro-header {
-       /*page*/
-        background-image: var(--intro-header-background-image-url-page);
-        /* background-image: url('/img/header_img/tag_bg.jpg'); */
+       /*post*/
+        background-image: var(--intro-header-background-image-url-post);
+        /* background-image: url('/img/post_header_img/docker_1.jpg'); */
       
     }
 
@@ -364,10 +346,44 @@
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           
-          <div class="site-heading">
-            <h1>Tags</h1>
-            <!--<hr class="small">-->
-            <span class="subheading"> </span>
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/tags/#Software" title="Software">Software</a>
+              
+              <a class="tag" href="/tags/#SRE" title="SRE">SRE</a>
+              
+            </div>
+            <h1>快速了解 Docker 容器網路模式</h1>
+            <h2 class="subheading">Photo by Victoire Joncheray on Unsplash</h2>
+            <span class="meta">
+              Posted by Alvin Hsieh on
+              2021-04-18
+            </span>
+
+
+            
+            <!-- WordCount start -->
+            <div class="blank_box"></div>
+            <span class="meta">
+              Estimated Reading Time <span class="post-count">5</span> Minutes
+            </span>
+            <div class="blank_box"></div>
+            <span class="meta">
+              Words <span class="post-count">1.6k</span> In Total
+            </span>
+            <div class="blank_box"></div>
+            <!-- WordCount end -->
+            
+            
+            <!-- 不蒜子统计 start -->
+            <span class="meta" id="busuanzi_container_page_pv">
+              Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+            </span>
+            <!-- 不蒜子统计 end -->
+            
+
+
           </div>
           
         </div>
@@ -408,329 +424,289 @@
 	Friends Blog、
 	anchorjs、
 	) -->
-		<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <!-- 标签列表 -->
+		<!-- Modify by Yu-Hsuan Yen -->
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-      <!-- 标签云 -->
-      <div id='tag_cloud' class="tags">
+        <h3 id="Docker-網路模式">Docker 網路模式</h3>
+<p>Docker 網路模式可以幫助我們對容器做有效的網路區隔，因此了解容器中各種網路模式的設置對於安全性非常重要的影響。</p>
+<p>在這之中，Docker 網路能分為 single-host 與 multi-host 兩種類型。簡單來說，single-host 就是在單一台主機上管理多個容器之間的網路。而本篇主要專注於 single-host 的四種網路模式：none、bridge、container、host，以及比較其中的差異。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1760/1*D42t6frq1t5OXQV7vlD3Kw.png" alt="img"></p>
+<h4 id="共同指令">共同指令</h4>
+<p><code>docker network ls</code> ：檢視所有的網路<br>
+<code>docker network inspect 網路名稱</code> ：顯示網路的詳細資訊</p>
+<h3 id="一、none-模式">一、none 模式</h3>
+<p>主要指令：<code>--net=none</code></p>
+<p>容器沒有對外連網的能力，唯一可用的就是自己的 loopback 127.0.0.1，這也代表外部沒有任何東西有辦法連結到該容器。</p>
+<script src="https://gist.github.com/HsiehMF/88d7a268162ba3180405002f0be919a6.js"></script>
+<p>最後，ping 外網會得到 Network is unreachable 的結果，證實了容器無法與外部接觸，使用 <code>ifconfig</code> 指令可觀察到 none-mode-01 容器確實只有自己的 loopback。</p>
+<p><img src="https://cdn-images-1.medium.com/max/1760/1*ZLYE-pTv9ezwcxnb3qM6mQ.png" alt="img">node-mode-01 容器執行結果</p>
+<h4 id="優缺點及適用場景">優缺點及適用場景</h4>
+<ol>
+<li>僅有內網，獨立性與安全性最高。</li>
+<li>沒有辦法連結外網，對於需要下載更新的情境就不適用。</li>
+<li>若搭配 container 模式可擴大 none 模式的使用情境。</li>
+</ol>
+<h3 id="二、bridge-模式">二、bridge 模式</h3>
+<p>為容器預設的網路模式。連結到同一個 bridge 下的容器們都能互相溝通，而不同 bridge 之間的容器是不能溝通的，除非透過 connect 指令。</p>
+<p>舉一個簡單的情境，當你身處在一間房子 (bridge1)，你理所當然可以與在房子裡的其他人(container)聊天、吃飯、玩 switch … 等等互動。但是，你突然想到另一個重要的朋友(container)，但他正在家裡 (bridge2)，很可惜沒辦法跟他分享當下的喜悅。</p>
+<p>不過，現在手機那麼方便，直接用視訊就好了 (connect)，這樣他就可以享受雖然在家，但也同時跟你們身處在同一個空間裡。</p>
+<p>主要指令：<code>--net=bridge名稱</code> 及 <code>docker network create --driver=bridge 要取的bridge名稱</code></p>
+<h4 id="一-預設-bridge-network">(一) 預設 bridge network</h4>
+<p>在 docker 中本來就會存在一個預設的 bridge，以下我們直接建立兩個容器來實際操作：</p>
+<script src="https://gist.github.com/HsiehMF/445f6d1fb8c1be01f0820df481b29321.js"></script>
+<p>然後，使用 <code>docker network inspect bridge</code> 會發現裡面多了剛剛新增的那兩個容器 。試著拿 bridge-mode-01 容器去 ping 看看外網及另外一個容器看結果會怎樣？</p>
+<p><img src="https://cdn-images-1.medium.com/max/2600/1*-s5g2rhePgwca4eEpDhfOw.png" alt="img"></p>
+<p>結果 bridge-mode-01 容器 ping 得通外網及 bridge-mode-02 容器，這證明容器具備了外網及與其他容器進行溝通的能力。</p>
+<p><img src="https://cdn-images-1.medium.com/max/2600/1*VwpCP5_V7VwzUsg3ReYRIA.png" alt="img"></p>
+<h4 id="二-、自己客製的-bridge-network">(二)、自己客製的 bridge network</h4>
+<p>使用 <code>docker network create --driver=bridge &lt;要取的bridge名稱&gt;</code> 來建立自己的 bridge network。以下會建立兩個自己的 bridge network，它們會各別擁有兩個容器：</p>
+<script src="https://gist.github.com/HsiehMF/ede3fdd380691ddc25846859e486fa49.js"></script>
+<p>由於資訊太長了，整理成表格呈現：</p>
+<p><img src="/img/post_img/medium-article-for-docker-1.png" alt="img"></p>
+<p>照著剛剛的規則，容器 1 跟 2 互通，而容器 3 跟 4 互通，但是如果容器 4 想要跟 my-bridge-01 的容器做跨 bridge 間溝通是沒辦法的。</p>
+<h4 id="不同-bridge-之間的溝通">不同 bridge 之間的溝通</h4>
+<p>主要指令：<code>docker network connect &lt;容器要連結到的bridge&gt; &lt;哪個容器&gt;</code></p>
+<script src="https://gist.github.com/HsiehMF/e917d31ae987ddab9d2e2fd791f9af20.js"></script>
+<p>**竟然 ping 通了，怎麼會這樣子？**其實你自己看 <code>docker network inspect my-bridge-01</code>就知道了。</p>
+<p>當容器 4 被 connect 到 <code>my-bridge-01</code> 時，它得到了位於 <code>my-bridge-01</code> subnet 的新 ip，另外一個是原本在 <code>my-bridge-02</code> subnet 的 ip，因此才能在兩個 bridge 內之間進行溝通。</p>
+<p><img src="/Software/%E5%BF%AB%E9%80%9F%E4%BA%86%E8%A7%A3-Docker-%E5%AE%B9%E5%99%A8%E7%B6%B2%E8%B7%AF%E6%A8%A1%E5%BC%8F/medium-article-for-docker-2.png" alt="img"></p>
+<blockquote>
+<p>有在用 docker-compose 應該會知道 link，據 docker 官方的說法是 link 為connect 舊版。總之，他們是一樣的東西。</p>
+</blockquote>
+<h4 id="優缺點及適用場景-2">優缺點及適用場景</h4>
+<ol>
+<li>各個容器能透過 bridge 進行溝通，可以使用外網。</li>
+<li>若其中一個容器受感染的話有可能攻擊其他容器。但也不用擔心，容器有辦法可以關閉被訪問。</li>
+<li>當網路配置的客製化需求大時可使用此模式，例如：DNS 設置、分配容器的 IP 地址範圍、MTU 等設定。</li>
+</ol>
+<h3 id="三、container-模式">三、container 模式</h3>
+<p>此種模式可以指定一個容器去「共享」另外一個容器的網路設定。舉例來說，容器 B 指定使用 none 模式的容器 A，那麼容器 B 就會是 none 模式。</p>
+<p>主要指令：<code>--net=container:&lt;你要複製的container&gt; --name &lt;新container&gt;</code></p>
+<script src="https://gist.github.com/HsiehMF/846ea37c97c3a464e4d438be2ff79916.js"></script>
+<p>執行結果為 container-mode-01 容器其網路設定確實與 container-04 完全相同。</p>
+<p><img src="https://cdn-images-1.medium.com/max/2600/1*wY94UtNIOJAkM-SvgPU3gA.png" alt="img">container-mode-01 容器之網路設定</p>
+<p><img src="https://cdn-images-1.medium.com/max/2600/1*tx7mBA-D2Br9IH1JYT2UWQ.png" alt="img">container-04 容器之網路設定</p>
+<p>因此，它也跟 container-04 一樣能 ping 得通不同 bridge-01 跟 02 內的容器哦～反正就是連體雙胞胎的概念啦！</p>
+<h4 id="優缺點及適用場景-3">優缺點及適用場景</h4>
+<ol>
+<li>兩個容器的接口(interface)共享，所以可能發生衝突問題。</li>
+<li>bridge 網路模式的情況會受到防火牆規則的限制，但是 container 模式由於共享的關係，就算關閉防火牆，容器之間一樣可以進行溝通，甚至兩個 none 模式容器也可以。</li>
+<li>可以拿來一個容器來監控另一個容器的網路流量[1]。</li>
+</ol>
+<h3 id="四、host-模式">四、host 模式</h3>
+<p>host 模式的容器會直接共用虛擬主機的網路設定。</p>
+<p>主要指令：<code>--net=host:&lt;你要複製的container&gt; --name &lt;建立的container&gt;</code></p>
+<script src="https://gist.github.com/HsiehMF/2b5819f731ff2d07bc09a7763399b4c1.js"></script>
+<blockquote>
+<p>hmf/nodejs-web 該 image 是一個顯示 「Hello, Nodejs and Docker」 文字的網頁，端口開在 3000，因此只要連到虛擬主機 ip 的 3000 port 就可以看到這段文字。</p>
+</blockquote>
+<h4 id="優缺點及適用場景-4">優缺點及適用場景</h4>
+<ol>
+<li>可以完全訪問主機的網路，獨立性及安全性最低。</li>
+<li>除非沒有其它選擇，否則不建議使用。</li>
+</ol>
+<p>最後，我們用書籍整理的架構圖來複習一下四種網路模式吧！而第二張圖是補充 bridge 模式的概念圖，容器會透過 container virtual interface 與其他容器溝通。</p>
+<p><img src="https://cdn-images-1.medium.com/max/2600/1*QSO37HXseDMM943W9OZzig.png" alt="img">Docker Network 整體架構圖</p>
+<p><img src="https://cdn-images-1.medium.com/max/1760/1*-HzV_FXAm7y54rrCotoYpg.png" alt="img">補充：Docker Network Bridge 模式之概念圖</p>
+<h3 id="總結">總結</h3>
+<p>single-host 的四種網路模式讓我們知道如何規劃與區隔容器之間的溝通，撰寫一次啟動多個容器 docker-compose 時也可以比較清楚 bridge 的部分在做些什麼事。</p>
+<h3 id="參考資料">參考資料</h3>
+<ol>
+<li>Nickoloff, J. (2016). <em>Docker in action</em>. Manning Publications Co.</li>
+</ol>
+
+
+        <hr>
+        <!-- Pager -->
+        <ul class="pager">
+          
+          <li class="previous">
+            <a href="/Clean Code/第三章-函式-Clean-Code-閱讀筆記/第三章-函式-Clean-Code-閱讀筆記/" data-toggle="tooltip" data-placement="top" title="第三章 函式—Clean Code 閱讀筆記">&larr; Previous Post</a>
+          </li>
+          
+          
+          <li class="next">
+            <a href="/Software/JavaScript-this-用法整理/JavaScript-this-用法整理/" data-toggle="tooltip" data-placement="top" title="JavaScript this 用法整理">Next Post &rarr;</a>
+          </li>
+          
+        </ul>
+
         
-        <a href="#無暇的程式碼" title="無暇的程式碼" rel="3">無暇的程式碼</a>
+        <!-- tip start -->
+        <!-- tip -->
+<!-- tip start -->
+<div class="tip">
+  <p>
+    
+      如果您喜歡此文章或發現它對您有用，歡迎發表評論。 若有任何問題，歡迎大家幫忙指正，感謝！
+    
+  </p>
+</div>
+<!-- tip end -->
+
+        <!-- tip end -->
         
-        <a href="#Clean Code" title="Clean Code" rel="3">Clean Code</a>
+
         
-        <a href="#JavaScript" title="JavaScript" rel="2">JavaScript</a>
+        <!-- Sharing Srtart -->
+        <!-- Social Social Share Post -->
+<!-- Docs:https://github.com/overtrue/share.js -->
+
+<div class="social-share" data-initialized="true" data-disabled="tencent ,douban ,qzone ,linkedin ,facebook ,google ,diandian" data-wechat-qrcode-helper="" align="center">
+  <ul class="list-inline text-center social-share-ul">
+    <!-- <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-twitter">
+        <i class="fa fa-twitter fa-1x" aria-hidden="true"></i>
+      </a>
+    </li> -->
+
+    <!-- <li class="social-share-li">
+      <a class="social-share-icon icon-wechat">
+        <i class="fa fa-weixin fa-1x" aria-hidden="true"></i>
+      </a>
+    </li> -->
+
+    <!-- <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-weibo">
+        <i class="fa fa-weibo fa-1x" aria-hidden="true"></i>
+      </a>
+    </li> -->
+
+    <!-- <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-qq">
+        <i class="fa fa-qq fa-1x" aria-hidden="true"></i>
+      </a>
+    </li> -->
+
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon" href="mailto:?subject=快速了解 Docker 容器網路模式&body=Hi,I found this website and thought you might like it http://yoursite-url/Software/快速了解-Docker-容器網路模式/快速了解-Docker-容器網路模式/">
+        <i class="fa fa-envelope fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- css & js -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css"> -->
+<script defer="defer" async="true" src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+        <!-- Sharing End -->
         
-        <a href="#Software" title="Software" rel="4">Software</a>
-        
-        <a href="#Behaviour-Driven Development" title="Behaviour-Driven Development" rel="1">Behaviour-Driven Development</a>
-        
-        <a href="#SRE" title="SRE" rel="1">SRE</a>
-        
+        <hr>
+
+        <!-- comments start -->
+        <!-- 1. gitalk comment -->
+
+
+<!-- 2. gitment comment -->
+
+
+<!-- 3. disqus comment -->
+
+
+        <!-- comments end -->
+        <hr>
+
       </div>
 
-      <!-- 标签列表 -->
-      
-      <div class="one-tag-list">
-        <span class="fa fa-tag listing-seperator" id="無暇的程式碼">
-          <span class="tag-text">無暇的程式碼</span>
-        </span>
-        
-        <div class="post-preview">
-          <a href="/Clean Code/第三章-函式-Clean-Code-閱讀筆記/第三章-函式-Clean-Code-閱讀筆記/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              第三章 函式—Clean Code 閱讀筆記
-              
-              <!-- Clean Code -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by fotografierende on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-        <div class="post-preview">
-          <a href="/Clean Code/第二章-有意義的命名—Clean-Code-閱讀筆記/第二章-有意義的命名—Clean-Code-閱讀筆記/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              第二章 有意義的命名—Clean Code 閱讀筆記
-              
-              <!-- Clean Code -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Jon Tyson on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-        <div class="post-preview">
-          <a href="/Clean Code/第一章-無瑕的程式碼—Clean-Code-閱讀筆記/第一章-無瑕的程式碼—Clean-Code-閱讀筆記/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              第一章 無瑕的程式碼—Clean Code 閱讀筆記
-              
-              <!-- Clean Code -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Christin Hume on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-      </div>
-      
-      <div class="one-tag-list">
-        <span class="fa fa-tag listing-seperator" id="Clean Code">
-          <span class="tag-text">Clean Code</span>
-        </span>
-        
-        <div class="post-preview">
-          <a href="/Clean Code/第三章-函式-Clean-Code-閱讀筆記/第三章-函式-Clean-Code-閱讀筆記/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              第三章 函式—Clean Code 閱讀筆記
-              
-              <!-- Clean Code -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by fotografierende on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-        <div class="post-preview">
-          <a href="/Clean Code/第二章-有意義的命名—Clean-Code-閱讀筆記/第二章-有意義的命名—Clean-Code-閱讀筆記/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              第二章 有意義的命名—Clean Code 閱讀筆記
-              
-              <!-- Clean Code -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Jon Tyson on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-        <div class="post-preview">
-          <a href="/Clean Code/第一章-無瑕的程式碼—Clean-Code-閱讀筆記/第一章-無瑕的程式碼—Clean-Code-閱讀筆記/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              第一章 無瑕的程式碼—Clean Code 閱讀筆記
-              
-              <!-- Clean Code -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Christin Hume on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-      </div>
-      
-      <div class="one-tag-list">
-        <span class="fa fa-tag listing-seperator" id="JavaScript">
-          <span class="tag-text">JavaScript</span>
-        </span>
-        
-        <div class="post-preview">
-          <a href="/Software/JavaScript-this-用法整理/JavaScript-this-用法整理/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              JavaScript this 用法整理
-              
-              <!-- Software -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Jamie Templeton on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-        <div class="post-preview">
-          <a href="/Software/JavaScript-原型鏈應該了解的概念/JavaScript-原型鏈應該了解的概念/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              JavaScript 原型鏈應該了解的概念
-              
-              <!-- Software -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Kamil Mehmood on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-      </div>
-      
-      <div class="one-tag-list">
-        <span class="fa fa-tag listing-seperator" id="Software">
-          <span class="tag-text">Software</span>
-        </span>
-        
-        <div class="post-preview">
-          <a href="/Software/JavaScript-this-用法整理/JavaScript-this-用法整理/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              JavaScript this 用法整理
-              
-              <!-- Software -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Jamie Templeton on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-        <div class="post-preview">
-          <a href="/Software/JavaScript-原型鏈應該了解的概念/JavaScript-原型鏈應該了解的概念/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              JavaScript 原型鏈應該了解的概念
-              
-              <!-- Software -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Kamil Mehmood on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-        <div class="post-preview">
-          <a href="/Software/概述-Behavior-Driven-Development/概述-Behavior-Driven-Development/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              概述 Behavior Driven Development
-              
-              <!-- Software -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Patrick Perkins on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-        <div class="post-preview">
-          <a href="/Software/快速了解-Docker-容器網路模式/快速了解-Docker-容器網路模式/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              快速了解 Docker 容器網路模式
-              
-              <!-- Software -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Victoire Joncheray on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-      </div>
-      
-      <div class="one-tag-list">
-        <span class="fa fa-tag listing-seperator" id="Behaviour-Driven Development">
-          <span class="tag-text">Behaviour-Driven Development</span>
-        </span>
-        
-        <div class="post-preview">
-          <a href="/Software/概述-Behavior-Driven-Development/概述-Behavior-Driven-Development/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              概述 Behavior Driven Development
-              
-              <!-- Software -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Patrick Perkins on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-      </div>
-      
-      <div class="one-tag-list">
-        <span class="fa fa-tag listing-seperator" id="SRE">
-          <span class="tag-text">SRE</span>
-        </span>
-        
-        <div class="post-preview">
-          <a href="/Software/快速了解-Docker-容器網路模式/快速了解-Docker-容器網路模式/">
-            <h2 class="post-title">
-              <!-- 這是標題 in tags page -->
-              快速了解 Docker 容器網路模式
-              
-              <!-- Software -->
-              
-            </h2>
-            
-            <h3 class="post-subtitle">
-              Photo by Victoire Joncheray on Unsplash
-            </h3>
-            
-          </a>
-        </div>
-        <hr>
-        
-      </div>
-      
+      <!-- Catalog: Tabe of Content -->
+      <!-- Table of Contents -->
 
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目錄</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Docker-%E7%B6%B2%E8%B7%AF%E6%A8%A1%E5%BC%8F"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Docker 網路模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%85%B1%E5%90%8C%E6%8C%87%E4%BB%A4"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">共同指令</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%80%E3%80%81none-%E6%A8%A1%E5%BC%8F"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">一、none 模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%84%AA%E7%BC%BA%E9%BB%9E%E5%8F%8A%E9%81%A9%E7%94%A8%E5%A0%B4%E6%99%AF"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">優缺點及適用場景</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BA%8C%E3%80%81bridge-%E6%A8%A1%E5%BC%8F"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">二、bridge 模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E4%B8%80-%E9%A0%90%E8%A8%AD-bridge-network"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">(一) 預設 bridge network</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E4%BA%8C-%E3%80%81%E8%87%AA%E5%B7%B1%E5%AE%A2%E8%A3%BD%E7%9A%84-bridge-network"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">(二)、自己客製的 bridge network</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E4%B8%8D%E5%90%8C-bridge-%E4%B9%8B%E9%96%93%E7%9A%84%E6%BA%9D%E9%80%9A"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">不同 bridge 之間的溝通</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%84%AA%E7%BC%BA%E9%BB%9E%E5%8F%8A%E9%81%A9%E7%94%A8%E5%A0%B4%E6%99%AF-2"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">優缺點及適用場景</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%89%E3%80%81container-%E6%A8%A1%E5%BC%8F"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">三、container 模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%84%AA%E7%BC%BA%E9%BB%9E%E5%8F%8A%E9%81%A9%E7%94%A8%E5%A0%B4%E6%99%AF-3"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">優缺點及適用場景</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%9B%9B%E3%80%81host-%E6%A8%A1%E5%BC%8F"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">四、host 模式</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%84%AA%E7%BC%BA%E9%BB%9E%E5%8F%8A%E9%81%A9%E7%94%A8%E5%A0%B4%E6%99%AF-4"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">優缺點及適用場景</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">總結</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">參考資料</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+
+
+      <!-- Sidebar Container -->
+      <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+        <!-- Featured Tags -->
+        
+        <section>
+          <!-- no hr -->
+          <h5>
+            <a href="/tags/">特色標簽</a>
+          </h5>
+          <div class="tags">
+            
+            <a class="tag" href="/tags/#Software" title="Software">Software</a>
+            
+            <a class="tag" href="/tags/#SRE" title="SRE">SRE</a>
+            
+          </div>
+        </section>
+        
+
+        <!-- Friends Blog -->
+        
+      </div>
     </div>
   </div>
-</div>
+</article>
+
+
+
+<!-- anchorjs start -->
+<!-- async load function -->
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script type="text/javascript">
+  // async load function
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener('load', function(e) {
+        c(null, e);
+      }, false);
+    }
+    s.parentNode.insertBefore(o, s);
+  };
+</script>
+<script type="text/javascript">
+  //anchor-js, Doc:http://bryanbraun.github.io/anchorjs/
+  async ("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js", function() {
+    anchors.options = {
+      visible: 'hover',
+      placement: 'left',
+      // icon: 'ℬ'
+      icon: '❡'
+    };
+    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+<!-- anchorjs end -->
+
 
 
 		<!-- Footer (contains ThemeColor、viewer) -->
